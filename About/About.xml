@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Configurable Shelf Capacity</name>
+  <author>Lupine Witch</author>
+  <supportedVersions>
+    <li>1.4</li>
+    <li>1.5</li>
+  </supportedVersions>
+  <packageId>LupineWitch.Mods.ConfigurableShelfCapacity</packageId>
+  <description>
+     Configure vanilla shelf capacity in the options (No game restart needed!).
+  </description>
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+  </loadAfter>
+</ModMetaData>
+
+
