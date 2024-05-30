@@ -23,18 +23,42 @@ namespace LupineWitch.ConfigurableShelfCapacity
 
         public static void InitDefCollection(IEnumerable<ThingDef> foundDefs)
         {
+
+            if(foundDefs is null)
+            {
+                Log.Error("Failed to initialise ConfigurableShelfCapacity Mod! Reason: No valid storage building defs.");
+                return;
+            }
+            if(storageDefs is null)
+            {
+                Log.Warning($"Error on initialise ConfigurableShelfCapacity Mod! {nameof(storageDefs)} is null");
+                storageDefs = new List<ThingDef>();
+                return;
+            }
+            if(SettingsDictionary is null)
+            {
+                Log.Warning($"Error on initialise ConfigurableShelfCapacity Mod! {nameof(SettingsDictionary)} is null");
+                SettingsDictionary = new Dictionary<string, int>();
+                return;
+            }
+
             storageDefs.AddRange(foundDefs);
+            var existingDefNames = storageDefs.Select(sd => sd.defName).ToArray();
+            SettingsDictionary.RemoveAll(s => !existingDefNames.Contains(s.Key));
+
             foreach (var def in foundDefs)
             {
                 if(SettingsDictionary.ContainsKey(def.defName))
+                    continue;
+
+                BuildingProperties buildingProperties = def.building;
+                if(buildingProperties == null)
                 {
-                    #if DEBUG
-                    Log.Message($"Duplicate setting entry on static constructor {def.defName}");
-                    #endif
+                    Log.Error($"{nameof(ConfigurableShelfCapacitySettings)}:{nameof(buildingProperties)} is null for the {def.defName}");
                     continue;
                 }
 
-                SettingsDictionary.Add(def.defName, def.building.maxItemsInCell);
+                SettingsDictionary.Add(def.defName, buildingProperties.maxItemsInCell);
             }
         }
 
@@ -52,7 +76,7 @@ namespace LupineWitch.ConfigurableShelfCapacity
                 if (SettingsDictionary.ContainsKey(storage.defName))
                     storage.building.maxItemsInCell = SettingsDictionary[storage.defName];
                 else
-                    Log.Warning($"[{nameof(ConfigurableShelfCapacityMod)}]:No ThingDef:{storageDefs} with thingClass:{nameof(Building_Storage)}");
+                    Log.Warning($"[{nameof(ConfigurableShelfCapacityMod)}]:No ThingDef:{storage.defName} with thingClass:{nameof(Building_Storage)}");
             }
         }
     }

@@ -39,6 +39,14 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 1.5|AnyCPU'">
+    <OutputPath>bin\Release 1.5\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\..\..\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
@@ -70,6 +78,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Xcopy /q /f /y "$(TargetDir)" "D:\SteamLibrary\steamapps\common\RimWorld\Mods\ConfigurableShelfLimit\1.5\Assemblies"</PostBuildEvent>
+    <PostBuildEvent>Xcopy /q /f /y "$(TargetDir)" "D:\SteamLibrary\steamapps\common\RimWorld\Mods\ConfigurableShelfLimit\1.5\Assemblies"
+Xcopy /q /f /y "$(TargetDir)" "$(SolutionDir)\..\1.5\Assemblies\"</PostBuildEvent>
   </PropertyGroup>
 </Project>
